@@ -2,6 +2,7 @@ import React, { useEffect, useState, createRef } from 'react';
 import './App.scss';
 
 import { TextField, Typography } from '@material-ui/core';
+import debounce from 'debounce';
 
 import moviesDataset from './data/movies.json';
 import MovieCard from './components/MovieCard/MovieCard';
@@ -83,7 +84,9 @@ function App() {
 
     filterMovies(searchInputRef.current.value, getActiveGenres(newGenres))
     setGenres(newGenres);
-  }
+  };
+
+  const onSearchInputChange = debounce(searchTerm => filterMovies(searchTerm, getActiveGenres(genres)), 300);
 
   //UTIL
 
@@ -116,7 +119,8 @@ function App() {
         <TextField 
           label="Search Movies"
           type="search"
-          ref={searchInputRef}
+          inputRef={searchInputRef}
+          onChange={evt => onSearchInputChange(evt.target.value)}
         />
         <div className="movies">
           {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie}/>)}
