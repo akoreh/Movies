@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createRef } from 'react';
 import './App.scss';
 
 import { TextField, Typography } from '@material-ui/core';
@@ -12,6 +12,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 20;
+  const searchInputRef = createRef();
 
   const parseMovies = () => {
     const genres = {};
@@ -40,6 +41,33 @@ function App() {
 
     setGenres(genres);
     setMovies(movies);
+  };
+
+  const filterMovies = (searchTerm = '', activeGenres) => {
+    let newMovies;
+
+    searchTerm = searchTerm.trim();
+
+    if (!searchTerm && !activeGenres.length) {
+      newMovies = movies.map(movie => {
+        movie.visible = true;
+        return movie;
+      });
+    } else {
+      newMovies = movies.map(movie => {
+        const titleIncludesSearchTerm = movie.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+
+        if (searchTerm && !activeGenres.length) {
+          movie.visible = titleIncludesSearchTerm;
+        } else {
+          movie.visible = titleIncludesSearchTerm && firstArrayContainsElementsFromSecondArray(movie.genres, activeGenres);
+        }
+
+        return movie;
+      });
+    }
+
+    setMovies(newMovies);
   }
 
 
@@ -50,12 +78,18 @@ function App() {
     const genreClone = {...genres[genre]};
 
     genreClone.active = !genreClone.active;
-    
-    setGenres({
-      ...genres,
-      [genre]: genreClone
-    });
+
+    const newGenres = {...genres, [genre]: genreClone};
+
+    filterMovies(searchInputRef.current.value, getActiveGenres(newGenres))
+    setGenres(newGenres);
   }
+
+  //UTIL
+
+  const firstArrayContainsElementsFromSecondArray = (arr1, arr2) => arr2.some(item => arr1.includes(item));
+
+  const getActiveGenres = genres => Object.keys(genres).filter(genre => genres[genre].active);
 
 
   useEffect(parseMovies, moviesDataset);
@@ -82,6 +116,7 @@ function App() {
         <TextField 
           label="Search Movies"
           type="search"
+          ref={searchInputRef}
         />
         <div className="movies">
           {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie}/>)}
