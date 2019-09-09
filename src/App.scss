@@ -1,0 +1,43 @@
+@import './scss/variables';
+
+.app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: $lightGrey;
+
+  .panel {
+    
+    &__right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .movies {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1.5rem;
+        height: 100%;
+
+        & > * {
+          flex: 1 0 21%;
+          margin: 5px;
+        }
+      }
+    }
+
+
+    &__left,
+    &__right {
+      padding: 2rem;
+    }
+
+    &__title {
+      user-select: none;
+    }
+  }
+}
