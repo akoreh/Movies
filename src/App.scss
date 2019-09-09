@@ -1,10 +1,8 @@
 @import './scss/variables';
+@import './scss/mixins';
 
 .app {
   display: flex;
-  height: 100%;
-  width: 100%;
-  background-color: $lightGrey;
 
   .panel {
 
@@ -29,7 +27,7 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
-      max-height: 100vh;
+      max-height: 95vh;
       overflow-y: auto;
       overflow-x: hidden;
 
@@ -37,11 +35,30 @@
         display: flex;
         flex-wrap: wrap;
         padding: 1.5rem;
-        height: 100%;
 
         & > * {
           flex: 1 0 21%;
           margin: 5px;
+          height: 8rem;
+
+          @include mediaQueryWidth(901px, 1400px) {
+            flex: 1 0 30%;
+          }
+
+          @include mediaQueryWidth(751px, 900px) {
+            flex: 1 0 45%;
+          }
+
+          @include mediaQueryWidth(0px, 750px) {
+            flex: 1 0 100%;
+          }
+        }
+      }
+
+      .pages {
+        margin-top: auto;
+        &__button:not(:last-of-type) {
+          margin-right: .2rem;
         }
       }
     }

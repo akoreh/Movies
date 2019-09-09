@@ -1,0 +1,55 @@
+@mixin mediaQueryWidth($minWidth:null, $maxWidth:null) {
+    @if ($minWidth != null and $maxWidth != null) {
+        @media (min-width: $minWidth) and (max-width: $maxWidth) {
+            @content;
+        }
+    } @else if ($maxWidth == null and $minWidth != null) {
+        @media (min-width: $minWidth){
+            @content;
+        }
+    } @else {
+        @media (max-width: $maxWidth){
+            @content;
+        }
+    }
+}
+
+@mixin mediaQueryHeight($minHeight:null, $maxHeight:null) {
+    @if ($minHeight != null and $maxHeight != null) {
+        @media (min-height: $minHeight) and (max-height: $maxHeight) {
+            @content;
+        }
+    } @else if ($maxHeight == null and $minHeight != null) {
+        @media (min-height: $minHeight){
+            @content;
+        }
+    } @else {
+        @media (max-height: $maxHeight){
+            @content;
+        }
+    }
+
+}
+
+
+///   @include scrollbars(.5em, slategray);
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+    ::-webkit-scrollbar {
+        width:  $size;
+        height: $size;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
+  
+    ::-webkit-scrollbar-track {
+        background: $background-color;
+    }
+  
+    // For Internet Explorer
+    body {
+      scrollbar-face-color: $foreground-color;
+      scrollbar-track-color: $background-color;
+    }
+}

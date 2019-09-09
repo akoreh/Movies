@@ -10,7 +10,7 @@ function GenreChip({genre, onClick}) {
             className="genreChip"
             label={`${genre.name} (${genre.count})`}
             onClick={onClick.bind(null, genre.name)}
-            color={genre.active ? 'primary' : 'default'}
+            color={genre.active ? 'secondary' : 'primary'}
         />
     );
 };

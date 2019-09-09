@@ -1,10 +1,11 @@
 import React, { useEffect, useState, createRef } from 'react';
 import './App.scss';
 
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography, Button } from '@material-ui/core';
 import debounce from 'debounce';
 
 import moviesDataset from './data/movies.json';
+
 import MovieCard from './components/MovieCard/MovieCard';
 import GenreChip from './components/GenreChip/GenreChip';
 
@@ -69,6 +70,7 @@ function App() {
     }
 
     setMovies(newMovies);
+    setCurrentPage(0);
   }
 
 
@@ -126,7 +128,17 @@ function App() {
           {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie}/>)}
         </div>
         <div className="pages">
-          {pages.map((page, index) => <button key={`${page}_${index+1}`} onClick={onPageClicked.bind(null, index)}>{index + 1}</button>)}
+          {pages.map((page, index) => (
+            <Button
+              key={`${page}_${index}`}
+              className="pages__button"
+              size="medium" 
+              variant="outlined"
+              color={currentPage === index ? 'secondary' : 'primary'}
+              onClick={onPageClicked.bind(null, index)}
+            >
+              {index + 1}
+            </Button>))}
         </div>
       </div>
     </div>
