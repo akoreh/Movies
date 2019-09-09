@@ -125,7 +125,7 @@ function App() {
           onChange={evt => onSearchInputChange(evt.target.value)}
         />
         <div className="movies">
-          {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie}/>)}
+          {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie} activeGenres={getActiveGenres(genres)}/>)}
         </div>
         <div className="pages">
           {pages.map((page, index) => (

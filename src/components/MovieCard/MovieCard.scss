@@ -1,0 +1,16 @@
+.movie {
+    &__genres {
+        display: flex;
+    }
+
+    &__genre {
+        &:not(:last-of-type) {
+            margin-right: .5rem;
+            flex-wrap: wrap;
+        }
+
+        &--active {
+            font-weight: 700 !important;
+        }
+    }
+}
