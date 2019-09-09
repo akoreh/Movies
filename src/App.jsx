@@ -101,6 +101,7 @@ function App() {
 
   const visibleMovies = movies.filter(movie => movie.visible);
   const pages = new Array(Math.ceil(visibleMovies.length / pageSize)).fill(1);
+  const activeGenres = getActiveGenres(genres);
 
   return (
     <div className="app">
@@ -125,7 +126,7 @@ function App() {
           onChange={evt => onSearchInputChange(evt.target.value)}
         />
         <div className="movies">
-          {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie} activeGenres={getActiveGenres(genres)}/>)}
+          {visibleMovies.slice(currentPage * pageSize, !currentPage ? pageSize : currentPage * pageSize + pageSize).map(movie => <MovieCard key={movie.id} movie={movie} activeGenres={activeGenres}/>)}
         </div>
         <div className="pages">
           {pages.map((page, index) => (
