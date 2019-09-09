@@ -7,6 +7,22 @@
   background-color: $lightGrey;
 
   .panel {
+
+    &__left {
+      
+      .genres {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-top: 2rem;
+
+        & > *:not(:last-child) {
+          margin-bottom: .5rem;
+        }
+      }
+    }
     
     &__right {
       display: flex;

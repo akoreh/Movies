@@ -5,6 +5,7 @@ import { TextField, Typography } from '@material-ui/core';
 
 import moviesDataset from './data/movies.json';
 import MovieCard from './components/MovieCard/MovieCard';
+import GenreChip from './components/GenreChip/GenreChip';
 
 function App() {
   const [genres, setGenres] = useState({});
@@ -45,6 +46,17 @@ function App() {
   // EVENTS
   const onPageClicked = page => setCurrentPage(page);
 
+  const onGenreClicked = genre => {
+    const genreClone = {...genres[genre]};
+
+    genreClone.active = !genreClone.active;
+    
+    setGenres({
+      ...genres,
+      [genre]: genreClone
+    });
+  }
+
 
   useEffect(parseMovies, moviesDataset);
 
@@ -55,6 +67,15 @@ function App() {
     <div className="app">
       <div className="panel__left">
         <Typography className="panel__title" variant="h4" gutterBottom > Genres </Typography>
+        <div className="genres">
+          {Object.keys(genres).map(genre => (
+            <GenreChip 
+              key={genre}
+              genre={{...genres[genre], name: genre}}
+              onClick={onGenreClicked}
+            />
+          ))}
+        </div>
       </div>
       <div className="panel__right">
         <Typography className="panel__title" variant="h4" gutterBottom > Movies </Typography>
