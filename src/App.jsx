@@ -130,7 +130,7 @@ function App() {
         <div className="pages">
           {pages.map((page, index) => (
             <Button
-              key={`${page}_${index}`}
+              key={`page_${index}`}
               className="pages__button"
               size="medium" 
               variant="outlined"
